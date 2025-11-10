@@ -7,7 +7,7 @@ axios.get('https://tarmeezacademy.com/api/v1/posts')
             <div class="card my-5">
                 <div class="card-header">
                     <a class="navbar-brand" href="#"><img class="rounded-circle mx-2" style="width: 30px" src="${response.data.data[1].author.profile_image}"></a>
-                    <b>${response.data.data[i].author.name}</b>
+                    <b>${response.data.data[i].author.username}</b>
                 </div>
                 <div class="card-body">
                     <img class="w-100" src="${response.data.data[i].image}">
@@ -17,6 +17,7 @@ axios.get('https://tarmeezacademy.com/api/v1/posts')
                     <hr>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right" viewBox="0 0 16 16"><path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/></svg>
                     <span class="mx-2">(${response.data.data[1].comments_count}) Comments</span>
+                    <span id="tags"><span class="bg-secondary p-1 rounded-2 text-light mx-1">Economy</span><span class="bg-secondary p-1 rounded-2 text-light mx-1">Economy</span></span>
                 </div>
             </div>        
         `
@@ -27,3 +28,52 @@ axios.get('https://tarmeezacademy.com/api/v1/posts')
   .catch(error => {
     console.log(error)
   })
+
+function loginUser() {
+  const userName = document.getElementById('username').value
+  const password = document.getElementById('password').value
+
+  const loginBtn = document.getElementById('login-btn')
+  const registerBtn = document.getElementById('register-btn')
+  const logoutBtn = document.getElementById('logout-btn')
+
+  const addPostBtn = document.getElementById('add-post-btn')
+
+  const loginModal = document.getElementById('exampleModal')
+
+  const loginSucceed =document.getElementById('login-succeed')
+  const loginFailed =document.getElementById('login-failed')
+  axios.post('https://tarmeezacademy.com/api/v1/login', {
+    "username": userName,
+    "password": password
+  })
+  .then(response => {
+    localStorage.setItem('token', response.data.token)
+
+    loginBtn.classList.add('d-none')
+    registerBtn.classList.add('d-none')
+    logoutBtn.classList.remove('d-none')
+    logoutBtn.classList.add('d-block')
+
+    addPostBtn.classList.remove('d-none')
+    addPostBtn.classList.remove('d-block')
+
+    loginModal.remove()
+    
+    loginSucceed.classList.remove('d-none')
+    loginSucceed.classList.add('d-block')
+    setTimeout(function(){
+      loginSucceed.classList.remove('d-block')
+      loginSucceed.classList.add('d-none')
+    }, 2000)
+  })
+  .catch(error => {
+    console.log(error)
+    loginFailed.classList.remove('d-none')
+    loginFailed.classList.add('d-block')
+    setTimeout(function(){
+      loginFailed.classList.remove('d-block')
+      loginFailed.classList.add('d-none')
+    }, 2000)
+  })
+}
