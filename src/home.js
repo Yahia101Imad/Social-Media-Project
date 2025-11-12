@@ -17,7 +17,6 @@ axios.get('https://tarmeezacademy.com/api/v1/posts')
                     <hr>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right" viewBox="0 0 16 16"><path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/></svg>
                     <span class="mx-2">(${response.data.data[1].comments_count}) Comments</span>
-                    <span id="tags"><span class="bg-secondary p-1 rounded-2 text-light mx-1">Economy</span><span class="bg-secondary p-1 rounded-2 text-light mx-1">Economy</span></span>
                 </div>
             </div>        
         `
@@ -29,23 +28,30 @@ axios.get('https://tarmeezacademy.com/api/v1/posts')
     console.log(error)
   })
 
+const loginBtn = document.getElementById('login-btn')
+const registerBtn = document.getElementById('register-btn')
+const logoutBtn = document.getElementById('logout-btn')
+
+const addPostBtn = document.getElementById('add-post-btn')
+
+const loginModal = document.getElementById('loginModal')
+const registerModal = document.getElementById('registerModal')
+
+const loginSucceed =document.getElementById('login-succeed')
+const loginFailed =document.getElementById('login-failed')
+const registerSucceed =document.getElementById('register-succeed')
+const registerFailed =document.getElementById('register-failed')
+
+const navProfileImg = document.getElementById('nav-profile-img')
+const navLogo = document.getElementById('nav-logo')
+
 function loginUser() {
-  const userName = document.getElementById('username').value
-  const password = document.getElementById('password').value
+  const loginUsername = document.getElementById('login-username').value
+  const loginPassword = document.getElementById('login-password').value
 
-  const loginBtn = document.getElementById('login-btn')
-  const registerBtn = document.getElementById('register-btn')
-  const logoutBtn = document.getElementById('logout-btn')
-
-  const addPostBtn = document.getElementById('add-post-btn')
-
-  const loginModal = document.getElementById('exampleModal')
-
-  const loginSucceed =document.getElementById('login-succeed')
-  const loginFailed =document.getElementById('login-failed')
   axios.post('https://tarmeezacademy.com/api/v1/login', {
-    "username": userName,
-    "password": password
+    "username": loginUsername,
+    "password": loginPassword
   })
   .then(response => {
     localStorage.setItem('token', response.data.token)
@@ -57,6 +63,10 @@ function loginUser() {
 
     addPostBtn.classList.remove('d-none')
     addPostBtn.classList.remove('d-block')
+
+    navLogo.classList.add('d-none')
+    navProfileImg.classList.remove('d-none')
+    navProfileImg.classList.add('d-block')
 
     loginModal.remove()
     
@@ -74,6 +84,57 @@ function loginUser() {
     setTimeout(function(){
       loginFailed.classList.remove('d-block')
       loginFailed.classList.add('d-none')
+    }, 2000)
+  })
+}
+
+function registerUser() {
+  const registerName = document.getElementById('register-name').value
+  const registerUsername = document.getElementById('register-username').value
+  const registerPassword = document.getElementById('register-password').value
+
+  const params = {
+    "name": registerName,
+    "username": registerUsername,
+    "password": registerPassword
+  }
+  axios.post('https://tarmeezacademy.com/api/v1/register', params)
+  .then(response => {
+    localStorage.setItem('token', response.data.token)
+
+    loginBtn.classList.add('d-none')
+    registerBtn.classList.add('d-none')
+    logoutBtn.classList.remove('d-none')
+    logoutBtn.classList.add('d-block')
+
+    addPostBtn.classList.remove('d-none')
+    addPostBtn.classList.remove('d-block')
+
+    navLogo.classList.add('d-none')
+    navProfileImg.classList.remove('d-none')
+    navProfileImg.classList.add('d-block')
+
+    registerModal.remove()
+    
+    registerSucceed.classList.remove('d-none')
+    registerSucceed.classList.add('d-block')
+    setTimeout(function(){
+      registerSucceed.classList.remove('d-block')
+      registerSucceed.classList.add('d-none')
+    }, 2000)
+  })
+  .catch(error => {
+    registerModal.remove()
+  
+    registerFailed.classList.remove('d-none')
+    registerFailed.classList.add('d-block')
+    
+    const registerFailedAlert = document.getElementById('register-failed')
+    registerFailedAlert.textContent = error.response.data.message
+
+    setTimeout(function(){
+      registerFailed.classList.remove('d-block')
+      registerFailed.classList.add('d-none')
     }, 2000)
   })
 }

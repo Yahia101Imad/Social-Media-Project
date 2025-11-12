@@ -9,35 +9,69 @@
     <script src="/node_modules/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false" style="background-color: rgba(0, 0, 0, 0.4)">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form>
-            <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">User name</label>
-                <input type="text" class="form-control" id="username">
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true" data-bs-backdrop="false" style="background-color: rgba(0, 0, 0, 0.4)">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="loginModal">Login</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="mb-3">
-                <label for="message-text" class="col-form-label">Password</label>
-                <input type="password" class="form-control" id="password">
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Username</label>
+                        <input type="text" class="form-control" id="login-username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Password</label>
+                        <input type="password" class="form-control" id="login-password">
+                    </div>
+                </form>
             </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="loginUser()">Login</button>
-        </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="loginUser()">Login</button>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModal" aria-hidden="true" data-bs-backdrop="false" style="background-color: rgba(0, 0, 0, 0.4)">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="registerModal">Register</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Name</label>
+                        <input type="text" class="form-control" id="register-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Username</label>
+                        <input type="text" class="form-control" id="register-username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Password</label>
+                        <input type="password" class="form-control" id="register-password">
+                    </div>
+                </form>
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="registerUser()">Register</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div id="login-succeed" class="alert alert-success col-2 position-fixed top-0 end-0 m-3 d-none" role="alert">Logged in Successfully</div>
-    <div id="login-failed" class="alert alert-danger col-2 position-fixed top-0 end-0 m-3 d-none" role="alert">Logged in Failed</div>
+    <div id="alerts">
+        <div id="login-succeed" class="alert alert-success col-2 position-fixed top-0 end-0 m-3 d-none" role="alert">Logged in Successfully</div>
+        <div id="login-failed" class="alert alert-danger col-2 position-fixed top-0 end-0 m-3 d-none" role="alert">Logged in Failed</div>
+        <div id="register-succeed" class="alert alert-success col-2 position-fixed top-0 end-0 m-3 d-none" role="alert">Registered Successfully</div>
+        <div id="register-failed" class="alert alert-danger col-2 position-fixed top-0 end-0 m-3 d-none" role="alert"></div>
+    </div>
 
     <button id="add-post-btn" class="btn btn-outline-success position-fixed bottom-0 end-0 m-5 d-flex justify-content-center align-items-center rounded-circle d-none" style="width: 60px; height: 60px; padding: 0;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/></svg>
     </button>
@@ -45,7 +79,8 @@
     <div class="container-sm col-6">
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img class="rounded-circle" style="width: 30px" src="/images/Profile-img.jpg"></a>
+                <a id="nav-profile-img" class="navbar-brand d-none" href="#"><img class="rounded-circle" style="width: 30px" src="/images/Profile-img.jpg"></a>
+                <a id="nav-logo" class="navbar-brand" href="#"><b>Social</b></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -59,8 +94,8 @@
                     </li>
                 </ul>
                 <div class="d-flex gap-2">
-                    <button id="login-btn" class="btn btn-outline-success"  data-bs-toggle="modal" data-bs-target="#exampleModal">Login</button>
-                    <button id="register-btn" class="btn btn-outline-success">Register</button>
+                    <button id="login-btn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                    <button id="register-btn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
                     <button id="logout-btn" class="btn btn-outline-success d-none">Logout</button>
                 </div>
                 </div>
