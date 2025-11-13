@@ -66,14 +66,48 @@
         </div>
     </div>
 
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="postModal">Your Post</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Title</label>
+                        <input type="text" class="form-control" id="post-title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Body</label>
+                        <textarea class="form-control" id="post-body"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Image</label>
+                        <br>
+                        <input type="file" id="post-image">
+                    </div>
+                </form>
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="createPost()">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="alerts">
         <div id="login-succeed" class="alert alert-success col-2 position-fixed top-0 end-0 m-3 d-none" role="alert">Logged in Successfully</div>
         <div id="login-failed" class="alert alert-danger col-2 position-fixed top-0 end-0 m-3 d-none" role="alert">Logged in Failed</div>
         <div id="register-succeed" class="alert alert-success col-2 position-fixed top-0 end-0 m-3 d-none" role="alert">Registered Successfully</div>
         <div id="register-failed" class="alert alert-danger col-2 position-fixed top-0 end-0 m-3 d-none" role="alert"></div>
+        <div id="createPost-succeed" class="alert alert-success col-2 position-fixed top-0 end-0 m-3 d-none" role="alert">Post Created</div>
+        <div id="createPost-failed" class="alert alert-danger col-2 position-fixed top-0 end-0 m-3 d-none" role="alert"></div>
     </div>
 
-    <button id="add-post-btn" class="btn btn-outline-success position-fixed bottom-0 end-0 m-5 d-flex justify-content-center align-items-center rounded-circle d-none" style="width: 60px; height: 60px; padding: 0;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/></svg>
+    <button id="add-post-btn" data-bs-toggle="modal" data-bs-target="#postModal" class="btn btn-outline-success position-fixed bottom-0 end-0 m-5 d-flex justify-content-center align-items-center rounded-circle d-none" style="width: 60px; height: 60px; padding: 0;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/></svg>
     </button>
 
     <div class="container-sm col-6">
@@ -96,7 +130,7 @@
                 <div class="d-flex gap-2">
                     <button id="login-btn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                     <button id="register-btn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
-                    <button id="logout-btn" class="btn btn-outline-success d-none">Logout</button>
+                    <button id="logout-btn" class="btn btn-outline-danger d-none">Logout</button>
                 </div>
                 </div>
             </div>
