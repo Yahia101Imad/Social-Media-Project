@@ -1,16 +1,21 @@
-axios.get('https://tarmeezacademy.com/api/v1/posts')
+let currentPage = 1
+let isLoading = false
+
+function getPosts() {
+  if (isLoading) return 
+  isLoading = true
+  axios.get(`https://tarmeezacademy.com/api/v1/posts?limit=5&page=${currentPage}`)
   .then(response => {
-    function getPosts() {
       let posts = document.getElementById('posts')
       let postsCount = response.data.data.length - 1
       for (let i = 0; i <= postsCount; i++) {
           let content = `
               <div class="card my-5">
                   <div class="card-header">
-                      <a class="navbar-brand" href="#"><img class="rounded-circle mx-2" style="width: 30px" src="${response.data.data[1].author.profile_image}"></a>
+                      <a class="navbar-brand" href="#"><img class="rounded-circle mx-2" style="width: 30px" src="${response.data.data[i].author.profile_image}"></a>
                       <b>${response.data.data[i].author.username}</b>
                   </div>
-                  <div class="card-body">
+                  <div class="card-body" onclick="openPost()" style="cursor: pointer">
                       <img class="w-100" src="${response.data.data[i].image}">
                       <p class="text-secondary">${response.data.data[i].created_at}</p>
                       <h5 class="card-title">${response.data.data[i].title}</h5>
@@ -23,12 +28,22 @@ axios.get('https://tarmeezacademy.com/api/v1/posts')
           `
           posts.innerHTML += content
       }
-    }
-    getPosts()
   })
   .catch(error => {
     console.log(error)
   })
+  .finally(() => {
+    isLoading = false
+  })
+}
+getPosts()
+
+window.addEventListener('scroll', () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+    currentPage++
+    getPosts(currentPage)
+  }
+})
 
 const loginBtn = document.getElementById('login-btn')
 const registerBtn = document.getElementById('register-btn')
@@ -188,19 +203,35 @@ function createPost() {
   axios.post('https://tarmeezacademy.com/api/v1/posts', formData, header)
   .then(function (response) {
     console.log(response)
-    getPosts()
     createPostSucceed.classList.remove('d-none')
     createPostSucceed.classList.add('d-block')
 
+    setTimeout(function(){
+      createPostSucceed.classList.remove('d-block')
+      createPostSucceed.classList.add('d-none')
+    }, 2000)
+
     const modal = bootstrap.Modal.getInstance(postModal)
     modal.hide()
+
+    posts.innerHTML = ""
+    getPosts()
   })
   .catch(function (error) {
       createPostFailed.textContent = error.response.data.message
       createPostFailed.classList.remove('d-none')
       createPostFailed.classList.add('d-block')
 
+      setTimeout(function(){
+        createPostFailed.classList.remove('d-block')
+        createPostFailed.classList.add('d-none')
+      }, 2000)
+
       const modal = bootstrap.Modal.getInstance(postModal)
       modal.hide()
   })
+}
+
+function openPost() {
+  window.location.href = "./postPage.html"
 }
