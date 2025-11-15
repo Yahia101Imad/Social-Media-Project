@@ -15,7 +15,7 @@ function getPosts() {
                       <a class="navbar-brand" href="#"><img class="rounded-circle mx-2" style="width: 30px" src="${response.data.data[i].author.profile_image}"></a>
                       <b>${response.data.data[i].author.username}</b>
                   </div>
-                  <div class="card-body" onclick="openPost()" style="cursor: pointer">
+                  <div class="card-body" onclick="openPost(${response.data.data[i].id})" style="cursor: pointer">
                       <img class="w-100" src="${response.data.data[i].image}">
                       <p class="text-secondary">${response.data.data[i].created_at}</p>
                       <h5 class="card-title">${response.data.data[i].title}</h5>
@@ -232,6 +232,7 @@ function createPost() {
   })
 }
 
-function openPost() {
-  window.location.href = "./postPage.html"
+function openPost(postId) {
+  localStorage.setItem('postId', postId)
+  window.location.href = './postPage.html'
 }
