@@ -42,7 +42,11 @@ function showPost(postId) {
                     <hr>
                     <div class="card p-2">
                         ${commentsContent}
-                    </div>                    
+                    </div>
+                    <div class="card p-2 d-flex flex-row align-items-center gap-2 mt-2 border-0">
+                        <input id="commentText" class="form-control" type="text">
+                        <button class="btn btn-primary" onclick="sendComment()">Send</button>
+                    </div>
                 </div>
             </div>        
         `
@@ -53,3 +57,24 @@ function showPost(postId) {
     })
 }
 showPost(postId)
+
+function sendComment() {
+    let commentText = document.getElementById('commentText').value
+    if (!commentText) return
+    let commentAdded = {
+        "body": commentText
+    }
+
+    axios.post(`https://tarmeezacademy.com/api/v1/posts/${postId}/comments`, commentAdded, {
+    headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+    }
+    })
+    .then(response => {
+        location.reload()
+        console.log(response.data)
+    })
+    .catch(error => {
+        console.log(error)
+    })
+}
