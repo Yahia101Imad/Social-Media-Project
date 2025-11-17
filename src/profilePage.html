@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social media Project</title>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="/node_modules/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModal" aria-hidden="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="postModal">Edit your Post</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Title</label>
+                        <input type="text" class="form-control" id="post-title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Body</label>
+                        <textarea class="form-control" id="post-body"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Image</label>
+                        <br>
+                        <input type="file" id="current-post-image">
+                    </div>
+                </form>
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="editPost()">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-sm col-6">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary mb-5">
+            <div class="container-fluid">
+                <a id="nav-profile-img" class="navbar-brand d-none" href="#"><img class="rounded-circle" style="width: 30px" src="/images/Profile-img.jpg"></a>
+                <a id="nav-logo" class="navbar-brand" href="#"><b>Social</b></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2">
+                    <button id="login-btn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                    <button id="register-btn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+                    <button id="logout-btn" class="btn btn-outline-danger d-none">Logout</button>
+                </div>
+                </div>
+            </div>
+        </nav>
+        <div id="profileCard" class="container mt-5"></div>
+        <div id="profileUserPosts" class="container mt-5"></div>
+    </div>
+
+    <script src="./profilePage.js"></script>
+</body>
+</html>

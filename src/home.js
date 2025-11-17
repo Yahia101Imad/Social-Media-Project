@@ -72,6 +72,7 @@ function loginUser() {
   })
   .then(response => {
     localStorage.setItem('token', response.data.token)
+    localStorage.setItem('userId', response.data.user.id)
 
     loginBtn.classList.add('d-none')
     registerBtn.classList.add('d-none')
